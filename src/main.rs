@@ -1,16 +1,14 @@
 use std::io;
 
 fn main() -> io::Result<()> {
-    let mut elf_max_calories = 0;
+    let mut calories_count:Vec<i32> = Vec::new();
     let mut current_elf_calories = 0;
 
     for line in io::stdin().lines() {
         let current_line = line.unwrap();
 
         if current_line == "" {
-            if current_elf_calories > elf_max_calories {
-                elf_max_calories = current_elf_calories;
-            }
+            calories_count.push(current_elf_calories);
             current_elf_calories = 0;
             continue
         } else {
@@ -19,7 +17,10 @@ fn main() -> io::Result<()> {
         }
     }
 
-    println!("Max elf: {}", elf_max_calories);
+    calories_count.sort();
+    calories_count.reverse();
+    let top_three = calories_count[0] + calories_count[1] + calories_count[2];
+    println!("Top three calory count: {}", top_three);
 
     Ok(())
 }
